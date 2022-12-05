@@ -20,3 +20,19 @@
 #
 
 require_relative 'rucksack'
+require_relative 'priority'
+
+prioritized_items = []
+
+file = File.open(__dir__ + '/data.txt')
+file.each do |l|
+  rucksack = RuckSack.new(l.chomp)
+  prioritized_items << rucksack.find_shared_item
+end
+file.close
+
+priority_values = prioritized_items.map do |i|
+  i.match?(/[A-Z]/) ? Priority::UPPERCASE[i.to_sym] : Priority::LOWERCASE[i.to_sym]
+end
+
+solution = priority_values.sum
