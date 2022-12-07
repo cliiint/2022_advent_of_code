@@ -12,19 +12,39 @@ class Solution
 
     lines = File.readlines(__dir__ + '/data.txt', chomp: true)
     lines.each do |l|
-      ranges = create_ranges(l)
+      ranges = Solution.create_ranges(l)
       a, b = ranges[0], ranges[1]
       overlap =
         (a.first >= b.first && a.last <= b.last) ||
           (b.first >= a.first && b.last <= a.last)
 
       contained_assignments += 1 if overlap
-      # 599
-      contained_assignments
     end
+
+    contained_assignments
+    # 599
   end
 
   def part_2
+    contained_assignments = 0
 
+    lines = File.readlines(__dir__ + '/data.txt', chomp: true)
+    lines.each do |l|
+      ranges = Solution.create_ranges(l)
+      a, b = ranges[0], ranges[1]
+      overlap =
+        (a.include?(b.first) || a.include?(b.last)) ||
+          (b.include?(a.first) || b.include?(a.last))
+
+      contained_assignments += 1 if overlap
+    end
+
+    contained_assignments
+    # 928
   end
 end
+
+solution = Solution.new
+
+# p solution.part_1
+# p solution.part_2
