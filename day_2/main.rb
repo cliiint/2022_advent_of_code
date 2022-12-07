@@ -51,6 +51,6 @@ lines.each { |l| sum += RockPaperScissors.play(l) }
 
 sum_two = 0
 lines.each {|l| sum_two += RockPaperScissors.play_part_two(l)}
-p sum_two
+# p sum_two
 # wrong, too high: 12857
 # correct: 12526
