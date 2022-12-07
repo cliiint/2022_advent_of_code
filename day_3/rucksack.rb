@@ -1,8 +1,9 @@
 class RuckSack
-  attr_reader :compartment_1, :compartment_2, :priority
+  attr_reader :compartment_1, :compartment_2, :priority, :all_items
 
   def initialize(contents)
     compartmentalize(contents)
+    @all_items = contents
   end
 
   def compartmentalize(string)
