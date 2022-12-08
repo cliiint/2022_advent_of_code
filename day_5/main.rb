@@ -10,11 +10,19 @@ class Solution
     end
 
     str = ''
-    stacks.each { |s| str += s[s.length - 1]}
+    stacks.each { |s| str += s[s.length - 1] }
     str
   end
 
   def part_2
+    lines = File.readlines(__dir__ + '/instructions.txt', chomp: true)
+    lines.each do |l|
+      move_crates(l)
+    end
+
+    str = ''
+    stacks.each { |s| str += s[s.length - 1] }
+    str
   end
 
   def move_crate(instruct)
@@ -28,6 +36,18 @@ class Solution
     qty.times do
       dest_stack << src_stack.pop
     end
+  end
+
+  def move_crates(instruct)
+    split = instruct.split('from')
+    qty = split[0][5..].to_i
+    src, dest = split[1].split('to').map { |s| s.to_i }
+
+    src_stack = instance_variable_get("@s_#{src}")
+    dest_stack = instance_variable_get("@s_#{dest}")
+
+    moved = src_stack.slice!(-qty, qty)
+    instance_variable_set("@s_#{dest}", dest_stack + moved) unless moved.nil?
   end
 
   def stacks
@@ -70,3 +90,5 @@ end
 solution = Solution.new
 # p solution.part_1
 # TDCHVHJTG
+# p solution.part_2
+# NGCMPJLHV
