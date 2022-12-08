@@ -4,9 +4,38 @@ class Solution
   end
 
   def part_1
+    lines = File.readlines(__dir__ + '/instructions.txt', chomp: true)
+    lines.each do |l|
+      move_crate(l)
+    end
+
+    str = ''
+    stacks.each { |s| str += s[s.length - 1]}
+    str
   end
 
   def part_2
+  end
+
+  def move_crate(instruct)
+    split = instruct.split('from')
+    qty = split[0][5..].to_i
+    src, dest = split[1].split('to').map { |s| s.to_i }
+
+    src_stack = instance_variable_get("@s_#{src}")
+    dest_stack = instance_variable_get("@s_#{dest}")
+
+    qty.times do
+      dest_stack << src_stack.pop
+    end
+  end
+
+  def stacks
+    stacks = []
+    9.times do |i|
+      stacks << instance_variable_get("@s_#{i + 1}".to_sym)
+    end
+    stacks
   end
 
   private
@@ -32,10 +61,12 @@ class Solution
       stripped_lines.each do |s|
         s.each_char.with_index do |c, i|
           arr = instance_variable_get("@s_#{i + 1}")
-          arr.unshift(c)
+          arr.unshift(c) unless c == ' '
         end
       end
     end
 end
 
 solution = Solution.new
+# p solution.part_1
+# TDCHVHJTG
