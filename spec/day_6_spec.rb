@@ -16,4 +16,8 @@ describe Solution do
     expect(solution.part_2('nppdvjthqldpwncqszvftbrmjlhg')).to eq(23)
     expect(solution.part_2('zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw')).to eq(26)
   end
+
+  it 'should return nil if there is no solution' do
+    expect(Solution.find_unique_substring('yyyyyyyyy', 3)).to be_nil
+  end
 end
