@@ -1,4 +1,4 @@
-require_relative '../day_3/main'
+require_relative '../../day_3/main'
 
 describe RuckSack do
   rucksack = RuckSack.new('gnJudgwy')

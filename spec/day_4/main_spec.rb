@@ -1,4 +1,4 @@
-require_relative '../day_4/main'
+require_relative '../../day_4/main'
 
 describe Solution do
   solution = Solution.new

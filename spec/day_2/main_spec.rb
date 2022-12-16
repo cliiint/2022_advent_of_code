@@ -1,4 +1,4 @@
-require_relative '../day_2/main'
+require_relative '../../day_2/main'
 
 describe RockPaperScissors do
   it 'should return an int' do
