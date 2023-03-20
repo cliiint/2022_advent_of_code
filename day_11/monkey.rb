@@ -1,15 +1,34 @@
 class Monkey
+  attr_accessor :inspections, :items
+
   def initialize(input)
     parse_input(input)
+    @inspections = 0
   end
 
   def add(item)
     @items.push(item)
   end
 
-  def throw(monkey)
-    item = @items.shift
+  def throw_item(monkey, item)
     monkey.add(item)
+  end
+
+  def take_turn(monkeys)
+    while @items.count > 0
+      monkey, item = inspect_item(monkeys)
+      throw_item(monkey, item)
+    end
+  end
+
+  def inspect_item(monkeys)
+    @inspections += 1
+    item = @items.shift
+    item = @operation.call(item)
+    item = (item / 3).floor
+    test_res = @test.call(item)
+    target_idx = test_res ? @true_target : @false_target
+    [monkeys[target_idx], item]
   end
 
   private
@@ -23,8 +42,8 @@ class Monkey
   end
 
   def parse_operation(str)
-    operator, int_s = str.split('old')[1].strip.split(' ')
-    Proc.new { |x| x.public_send(operator, int_s.to_i) }
+    operator, int_s = str.split('=')[1].split(' ')[1..2]
+    Proc.new { |x| x.public_send(operator, int_s == 'old' ? x : int_s.to_i) }
   end
 
   def parse_test(str)
