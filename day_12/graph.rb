@@ -5,7 +5,7 @@ INFINITY = Float::INFINITY
 
 class Graph
   attr_accessor :start, :finish
-  attr_reader :adjacency_list, :vertices
+  attr_reader :vertices
 
   def initialize
     @adjacency_list = {}
@@ -45,7 +45,6 @@ class Graph
     distances = {} # a map of the shortest distance from start to each vertex
     previous = {} # the node that occurred before current, where current is the key. eg "shortest way to get from 0,1, is from 0,0" [0,1]: [0,0]
     path = []
-    smallest = nil
 
     # initial state
     @adjacency_list.keys.each do |v|
@@ -74,7 +73,7 @@ class Graph
       end
 
       if smallest || distances[smallest] != INFINITY
-        @adjacency_list[smallest].each.with_index do |neighbor, i|
+        @adjacency_list[smallest].count.times do |i|
           next_node = @adjacency_list[smallest][i]
           candidate = distances[smallest] + next_node[:weight]
           next_neighbor = next_node[:vertex].key
@@ -105,22 +104,14 @@ class Graph
   end
 
   def viable_neighbor(str, e)
+    res = nil
     x, y = to_coords(str)
-    if x < 0 || y < 0
-      return nil
-    end
-    coords = to_string(x,y)
-    vertex = find_vertex(coords)
-    if vertex.nil?
-      return nil
-    end
+    return res if x < 0 || y < 0
+    vertex = find_vertex(to_string(x,y))
+    return res if vertex.nil?
     valid_elevation = vertex.elevation <= e + 1
-
-    if !valid_elevation
-      return nil
-    else
-      return vertex
-    end
+    res = vertex if valid_elevation
+    res
   end
 end
 
