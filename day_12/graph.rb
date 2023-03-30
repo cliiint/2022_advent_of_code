@@ -1,4 +1,5 @@
 require_relative 'priority_queue'
+require_relative 'vertex'
 
 INFINITY = Float::INFINITY
 
@@ -86,8 +87,7 @@ class Graph
       end
     end
 
-    pp path.count
-    pp path.reverse
+    path.reverse
   end
 
   private
